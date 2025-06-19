@@ -6,6 +6,10 @@ class ProductList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(title: 'ProgHub ', home: ProductListScreen());
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      title: 'ProgHub ',
+      home: ProductListScreen(),
+    );
   }
 }

@@ -35,7 +35,18 @@ class _ProductListScreenState extends State<ProductListScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('F.S Product')),
+      appBar: AppBar(
+        title: Text('F.S Product'),
+        actions: [
+          IconButton(onPressed: () => {}, icon: Icon(Icons.card_travel)),
+        ],
+      ),
+      floatingActionButton: FloatingActionButton(
+        backgroundColor: Colors.blueGrey,
+        onPressed: () => {},
+        child: Icon(Icons.add, color: Colors.white),
+      ),
+
       body: FutureBuilder<List<Product>>(
         future: _futureProducts,
         builder: (context, snapshot) {
@@ -50,18 +61,10 @@ class _ProductListScreenState extends State<ProductListScreen> {
             itemCount: products.length,
             itemBuilder: (context, index) {
               final product = products[index];
-              return Row(
-                children: [
-                  ListTile(
-                    leading: Image.network(
-                      product.image,
-                      height: 50,
-                      width: 50,
-                    ),
-                    title: Text(product.title),
-                    subtitle: Text('\$${product.price.toStringAsFixed(2)}'),
-                  ),
-                ],
+              return ListTile(
+                leading: Image.network(product.image, height: 50, width: 50),
+                title: Text(product.title),
+                subtitle: Text('\$${product.price.toStringAsFixed(2)}'),
               );
             },
           );
