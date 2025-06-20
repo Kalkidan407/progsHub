@@ -1,98 +1,48 @@
-// import 'package:flutter/material.dart';
-// import 'package:http/http.dart' as http;
-// import 'dart:convert';
-// import 'product.dart';
+// @override
+// Widget build(BuildContext context) {
+//   final favoriteProducts = Provider.of<FavoriteNotifier>(context).favorites;
+//   final totalPrice = favoriteProducts.fold(
+//     0.0,
+//     (sum, item) => sum + item.price,
+//   );
 
-// void main() => runApp(MyApp());
-
-// class MyApp extends StatelessWidget {
-//   @override
-//   Widget build(BuildContext context) {
-//     return MaterialApp(title: 'Fake Store', home: ProductListScreen());
-//   }
-// }
-
-// class ProductListScreen extends StatefulWidget {
-//   @override
-//   _ProductListScreenState createState() => _ProductListScreenState();
-// }
-
-// class _ProductListScreenState extends State<ProductListScreen> {
-//   late Future<List<Product>> _futureProducts;
-
-//   @override
-//   void initState() {
-//     super.initState();
-//     _futureProducts = fetchProducts();
-//   }
-
-//   Future<List<Product>> fetchProducts() async {
-//     final response = await http.get(
-//       Uri.parse('https://fakestoreapi.com/products'),
-//     );
-
-//     if (response.statusCode == 200) {
-//       List jsonData = json.decode(response.body);
-//       return jsonData.map((item) => Product.fromJson(item)).toList();
-//     } else {
-//       throw Exception('Failed to load products');
-//     }
-//   }
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       appBar: AppBar(title: Text('Fake Store Products')),
-//       body: FutureBuilder<List<Product>>(
-//         future: _futureProducts,
-//         builder: (context, snapshot) {
-//           if (snapshot.connectionState == ConnectionState.waiting)
-//             return Center(child: CircularProgressIndicator());
-//           else if (snapshot.hasError)
-//             return Center(child: Text('Error: ${snapshot.error}'));
-
-//           final products = snapshot.data!;
-//           return ListView.builder(
-//             itemCount: products.length,
-//             itemBuilder: (context, index) {
-//               final product = products[index];
-//               return Card(
-//                 child: ListTile(
-//                   leading: Image.network(product.image, height: 50, width: 50),
-//                   title: Text(product.title),
-//                   subtitle: Text('\$${product.price.toStringAsFixed(2)}'),
-//                 ),
-//               );
-//             },
-//           );
-//         },
-//       ),
-//     );
-//   }
-// }
-
-// class CartModel extends ChangeNotifier {
-//   /// Internal, private state of the cart.
-//   final List<Item> _items = [];
-
-//   /// An unmodifiable view of the items in the cart.
-//   UnmodifiableListView<Item> get items => UnmodifiableListView(_items);
-
-//   /// The current total price of all items (assuming all items cost $42).
-//   int get totalPrice => _items.length * 42;
-
-//   /// Adds [item] to cart. This and [removeAll] are the only ways to modify the
-//   /// cart from the outside.
-//   void add(Item item) {
-//     _items.add(item);
-//     // This call tells the widgets that are listening to this model to rebuild.
-//     notifyListeners();
-//   }
-
-//   /// Removes all items from the cart.
-//   void removeAll() {
-//     _items.clear();
-//     // This call tells the widgets that are listening to this model to rebuild.
-//     notifyListeners();
-//   }
+//   return Scaffold(
+//     appBar: AppBar(title: Text("Favorites")),
+//     body: Column(
+//       children: [
+//         Expanded(
+//           child:
+//               favoriteProducts.isEmpty
+//                   ? Center(child: Text("No favorite products"))
+//                   : ListView.builder(
+//                     itemCount: favoriteProducts.length,
+//                     itemBuilder: (context, index) {
+//                       final product = favoriteProducts[index];
+//                       return ListTile(
+//                         title: Text(product.title),
+//                         subtitle: Text("\$${product.price.toStringAsFixed(2)}"),
+//                       );
+//                     },
+//                   ),
+//         ),
+//         Container(
+//           padding: EdgeInsets.all(16),
+//           color: Colors.blueGrey,
+//           child: Row(
+//             mainAxisAlignment: MainAxisAlignment.spaceBetween,
+//             children: [
+//               Text(
+//                 "Total:",
+//                 style: TextStyle(color: Colors.white, fontSize: 18),
+//               ),
+//               Text(
+//                 "\$${totalPrice.toStringAsFixed(2)}",
+//                 style: TextStyle(color: Colors.white, fontSize: 18),
+//               ),
+//             ],
+//           ),
+//         ),
+//       ],
+//     ),
+//   );
 // }

@@ -1,15 +1,27 @@
 import 'package:flutter/material.dart';
+import 'package:proghubass/product_data/product.dart';
 
-class MyWidget extends StatefulWidget {
-  const MyWidget({super.key});
+class Notifier extends ChangeNotifier {
+  final List<Product> _products = [];
 
-  @override
-  State<MyWidget> createState() => _MyWidgetState();
-}
+  List<Product> get products => _products;
 
-class _MyWidgetState extends State<MyWidget> {
-  @override
-  Widget build(BuildContext context) {
-    return const Placeholder();
+  void add(Product product) {
+    if (_products.contains(product)) {
+      _products.remove(product);
+    } else {
+      _products.add(product);
+    }
+    notifyListeners();
+  }
+
+  bool isFavorite(Product product) {
+    return _products.contains(product);
+  }
+
+  void removeAll() {
+    _products.clear();
+
+    notifyListeners();
   }
 }
