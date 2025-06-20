@@ -8,8 +8,9 @@ class FavoriteScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final favoriteProducts = Provider.of<Notifier>(context).products;
-
+    // final favoriteProducts = Provider.of<Notifier>(context).products;
+    final favoriteProducts = context.watch<Notifier>().products;
+    final favDelete = context.watch<Notifier>();
     // final favoriteProducts = context.watch<Notifier>().products;
     final totalPrice = favoriteProducts.fold(
       0.0,
@@ -31,8 +32,8 @@ class FavoriteScreen extends StatelessWidget {
 
                         return Dismissible(
                           key: UniqueKey(),
-                          direction: DismissDirection.horizontal,
-                          confirmDismiss: (direction) async => false,
+                          direction: DismissDirection.endToStart,
+
                           background: Container(
                             color: Colors.red,
                             alignment: Alignment.centerRight,
@@ -40,7 +41,7 @@ class FavoriteScreen extends StatelessWidget {
                           ),
 
                           onDismissed: (direction) {
-                            context.watch<Notifier>().delete(product);
+                            favDelete.remove(product);
 
                             ScaffoldMessenger.of(context).showSnackBar(
                               SnackBar(

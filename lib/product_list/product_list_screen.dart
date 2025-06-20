@@ -103,12 +103,12 @@ class _ProductListScreenState extends State<ProductListScreen> {
             final products = snapshot.data!;
 
             return GridView.builder(
-              padding: const EdgeInsets.all(12),
+              padding: const EdgeInsets.all(6),
               gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 3,
+                crossAxisCount: 2,
                 crossAxisSpacing: 20,
                 mainAxisSpacing: 20,
-                childAspectRatio: 0.9,
+                childAspectRatio: 0.6,
               ),
 
               itemCount: products.length,
@@ -117,29 +117,32 @@ class _ProductListScreenState extends State<ProductListScreen> {
                 final product = products[index];
 
                 return Container(
-                  padding: EdgeInsets.all(7),
+                  padding: EdgeInsets.all(23),
 
                   decoration: BoxDecoration(
                     // color: Colors.white,
                     borderRadius: BorderRadius.circular(12),
+
                     border: Border.all(
-                      color: const Color.fromARGB(255, 120, 119, 119),
+                      color: const Color.fromARGB(221, 52, 51, 51),
                     ),
                   ),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
+
                     children: [
                       Expanded(
                         child: Image.network(
                           product.image,
-                          fit: BoxFit.cover,
+
+                          fit: BoxFit.fill,
                           width: double.infinity,
                         ),
                       ),
-                      SizedBox(height: 20),
+                      SizedBox(height: 5),
                       Text(
                         product.title,
-                        maxLines: 2,
+                        maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                         style: TextStyle(fontWeight: FontWeight.bold),
                       ),
@@ -147,11 +150,9 @@ class _ProductListScreenState extends State<ProductListScreen> {
                         '\$${product.price.toStringAsFixed(2)}',
                         style: TextStyle(fontWeight: FontWeight.normal),
                       ),
-                      SizedBox(height: 20),
+                      SizedBox(height: 2),
                       Row(
                         children: [
-                          SizedBox(width: 50),
-
                           IconButton(
                             onPressed:
                                 () => {
@@ -174,7 +175,7 @@ class _ProductListScreenState extends State<ProductListScreen> {
                             ),
                           ),
 
-                          SizedBox(width: 50),
+                          SizedBox(width: 1),
                           IconButton(
                             onPressed: () => {},
                             icon: Icon(

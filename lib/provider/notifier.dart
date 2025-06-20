@@ -7,15 +7,18 @@ class Notifier extends ChangeNotifier {
   List<Product> get products => _products;
 
   void add(Product product) {
-    _products.add(product);
+    if (_products.any((p) => p.id == product.id)) {
+      _products.removeWhere((p) => p.id == product.id);
+    } else {
+      _products.add(product);
+    }
 
     notifyListeners();
   }
 
-  void delete(Product product) {
-    if (_products.any((p) => p.id == product.id)) {
-      _products.removeWhere((p) => p.id == product.id);
-    }
+  void remove(Product product) {
+    _products.removeWhere((p) => p.id == product.id);
+    notifyListeners();
   }
 
   bool isFavorite(Product product) {
