@@ -9,6 +9,7 @@ class FavoriteScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final favoriteProducts = Provider.of<Notifier>(context).products;
+
     // final favoriteProducts = context.watch<Notifier>().products;
     final totalPrice = favoriteProducts.fold(
       0.0,
@@ -27,11 +28,35 @@ class FavoriteScreen extends StatelessWidget {
                       itemCount: favoriteProducts.length,
                       itemBuilder: (context, index) {
                         Product product = favoriteProducts[index];
-                        return ListTile(
-                          leading: Image.network(product.image, width: 50),
-                          title: Text(product.title),
-                          subtitle: Text(
-                            "\$${product.price.toStringAsFixed(2)}",
+
+                        return Dismissible(
+                          key: UniqueKey(),
+                          direction: DismissDirection.horizontal,
+                          confirmDismiss: (direction) async => false,
+                          background: Container(
+                            color: Colors.red,
+                            alignment: Alignment.centerRight,
+                            padding: EdgeInsets.only(right: 25),
+                          ),
+
+                          onDismissed: (direction) {
+                            context.watch<Notifier>().delete(product);
+
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(
+                                content: Text(
+                                  '${product.title} removed from favorites',
+                                ),
+                              ),
+                            );
+                          },
+
+                          child: ListTile(
+                            leading: Image.network(product.image, width: 50),
+                            title: Text(product.title),
+                            subtitle: Text(
+                              "\$${product.price.toStringAsFixed(2)}",
+                            ),
                           ),
                         );
                       },
